@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text to Speech</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 2rem;
+            background-color:#4338CA;
+        }
+        h1 {
+            text-align: center;
+            color: #e4dada;
+            margin-bottom: 2rem;
+            font-size: 25px;
+        }
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0.25rem;
+            border: 1px solid #05090e;
+            border-radius: 20px;
+        }
+        button {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #6366F1;
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4338CA;
+        }
+        #counters {
+            color: #e4dada;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text to Speech</h1>
+        <input id="text" type="text" placeholder="Enter text here..." class="form-control" oninput="updateCounters()" />
+        <button onclick="textToSpeech()" class="btn btn-primary mt-3">Speak</button>
+        <div id="counters">
+            <p id="charCount">Character count: 0</p>
+            <p id="wordCount">Word count: 0</p>
+            <p id="symbolCount">Symbol count: 0</p>
+        </div>
+    </div>
+
+    <script>
+        function textToSpeech() {
+            var msg = new SpeechSynthesisUtterance();
+            var textInput = document.getElementById('text').value;
+            msg.text = textInput;
+            window.speechSynthesis.speak(msg);
+        }
+
+        function updateCounters() {
+            var textInput = document.getElementById('text').value;
+            document.getElementById('charCount').innerText = "Character count: " + textInput.length;
+            document.getElementById('wordCount').innerText = "Word count: " + textInput.split(/\s+/).filter(function(word) { return word.length > 0 }).length;
+            document.getElementById('symbolCount').innerText = "Symbol count: " + textInput.replace(/\w/g, '').length;
+        }
+    </script>
+</body>
+</html>
